@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>react-redux-modal</title>
+    <meta charset="utf-8">
+    <style>
+      .root {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        padding: 50px 0;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0,0,0,.5);
+      }
+      .enterActive .overlay, .leaveActive .overlay {
+        transition: all .5s ease-in-out;
+        transition-property: opacity;
+      }
+      .enter .overlay {opacity: 0; }
+      .enterActive .overlay  {opacity: 1; }
+      .leave .overlay {opacity: 1; }
+      .leaveActive .overlay {opacity: 0; }
+
+      .content {
+        position: relative;
+        margin: 0 auto;
+        background-color: white;
+        width: 400px;
+        height: 800px;
+      }
+      .enterActive .content, .leaveActive .content {
+        transition: all .2s ease-in-out;
+        transition-property: opacity, top;
+      }
+      .enter .content {opacity: 0; top: 10px; }
+      .enterActive .content {opacity: 1; top: 0; }
+      .leave .content {opacity: 1; top: 0; }
+      .leaveActive .content {opacity: 0; top: 10px; }
+    </style>
+  </head>
+  <body>
+    <div class="app"></div>
+    <script src="/example/vendor.js"></script>
+    <script src="/example/app.js"></script>
+  </body>
+</html>
