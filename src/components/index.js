@@ -4,4 +4,4 @@ import ModalPortal from './ModalPortal';
 export {
   Modal,
   ModalPortal
-}
+};

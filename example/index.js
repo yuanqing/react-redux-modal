@@ -12,7 +12,7 @@ const store = createStore(reducer);
 
 class Main extends Component {
   render() {
-    const {showModal, hideModal, modalProps} = this.props;
+    const {showModal, modalProps} = this.props;
     return (
       <div>
         <button onClick={showModal}>Show modal</button>
@@ -28,7 +28,6 @@ const mapStateToProps = ({modal}) => {
   };
 };
 const mapDispatchToProps = {
-  hideModal,
   showModal
 };
 const App = connect(mapStateToProps, mapDispatchToProps)(Main);

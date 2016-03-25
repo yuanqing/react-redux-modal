@@ -38,7 +38,7 @@ export default class Modal extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this.refs.root[this.props.isVisible ? 'focus' : 'blur']();
   }
 
