@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {combineReducers, createStore} from 'redux';
 
-import Modal, {modal, hideModal, showModal, toggleModal} from '../src';
+import {ModalPortal, modal, hideModal, showModal} from '../src';
 
 const reducer = combineReducers({
   modal
@@ -12,31 +12,24 @@ const store = createStore(reducer);
 
 class Main extends Component {
   render() {
-    const {toggleModal} = this.props;
+    const {showModal, hideModal, modalProps} = this.props;
     return (
       <div>
-        <button onClick={toggleModal}>Toggle modal</button>
-        <Modal
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-          transitionName={{
-            enter: 'enter',
-            enterActive: 'enterActive',
-            leave: 'leave',
-            leaveActive: 'leaveActive'
-          }}>
-          <div>Modal</div>
-        </Modal>
+        <button onClick={showModal}>Show modal</button>
+        <ModalPortal {...modalProps} />
       </div>
     );
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({modal}) => {
+  return {
+    modal
+  };
+};
 const mapDispatchToProps = {
   hideModal,
-  showModal,
-  toggleModal
+  showModal
 };
 const App = connect(mapStateToProps, mapDispatchToProps)(Main);
 
