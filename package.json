@@ -1,13 +1,21 @@
 {
   "name": "@yuanqing/react-redux-modal",
   "version": "0.0.0",
-  "description": "A React modal bound to the Redux store.",
+  "description": "A React modal connected to the Redux store.",
   "author": "Lim Yuan Qing",
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/yuanqing/react-redux-modal.git"
+  },
+  "dependencies": {
+    "react-addons-css-transition-group": "^0.14.7"
+  },
+  "peerDependencies": {
+    "react": "^0.14.7",
+    "react-redux": "^4.4.1",
+    "redux": "^3.3.1"
   },
   "devDependencies": {
     "babel-cli": "6.6.5",
@@ -37,12 +45,6 @@
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.7.0"
-  },
-  "peerDependencies": {
-    "react": "^0.14.7",
-    "react-addons-css-transition-group": "0.14.7",
-    "react-redux": "^4.4.1",
-    "redux": "^3.3.1"
   },
   "scripts": {
     "lint": "gulp lint",
