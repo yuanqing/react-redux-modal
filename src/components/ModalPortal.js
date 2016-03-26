@@ -1,26 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Modal, hideModal} from '../';
+import {Modal, hideModal, showModal} from '../';
 
-const ModalPortal = ({hideModal, showModal, isVisible, modalProps, modalType}) => {
+const ModalPortal = ({hideModal, showModal, isVisible, modals, modalProps, modalType}) => {
   const props = {
-    transitionEnterTimeout: 500,
-    transitionLeaveTimeout: 500,
-    transitionName: {
-      enter: 'enter',
-      enterActive: 'enterActive',
-      leave: 'leave',
-      leaveActive: 'leaveActive'
-    },
-    ...modalProps,
     hideModal,
-    showModal,
     isVisible
   };
+  const SpecificModal = modals[modalType];
   return (
     <Modal {...props}>
-      {modalType && isVisible
-        ? <div>Modal</div>
+      {SpecificModal
+        ? <SpecificModal {...modalProps} />
         : <span />}
     </Modal>
   );
@@ -30,6 +21,7 @@ const mapStateToProps = (state) => {
   return state.modal;
 };
 const mapDispatchToProps = {
-  hideModal
+  hideModal,
+  showModal
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalPortal);

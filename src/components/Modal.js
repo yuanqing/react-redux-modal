@@ -3,6 +3,17 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const ESCAPE_KEYCODE = 27;
 
+const cssTransitionGroupOptions = {
+  transitionEnterTimeout: 500,
+  transitionLeaveTimeout: 500,
+  transitionName: {
+    enter: 'enter',
+    enterActive: 'enterActive',
+    leave: 'leave',
+    leaveActive: 'leaveActive'
+  }
+};
+
 export default class Modal extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
@@ -17,7 +28,7 @@ export default class Modal extends Component {
     rootClassName: 'root',
     contentClassName: 'content',
     overlayClassName: 'overlay'
-  }
+  };
 
   hideOnOverlayClick = (event) => {
     if (event.target === this.refs.overlay) {
@@ -55,6 +66,7 @@ export default class Modal extends Component {
     return (
       <ReactCSSTransitionGroup
         component="div"
+        {...cssTransitionGroupOptions}
         {...rest}>
         {isVisible &&
           <div
