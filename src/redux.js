@@ -1,11 +1,17 @@
 export const HIDE_MODAL = 'modal/HIDE_MODAL';
 export const SHOW_MODAL = 'modal/SHOW_MODAL';
 
+const defaultSettings = {
+  shouldHideOnOverlayClick: false,
+  shouldHideOnEscapeKeyDown: false,
+  hasCloseButton: false
+};
+
 export const initialState = {
   isVisible: false,
   modalType: null,
-  dataProps: {},
-  settingsProps: {}
+  modalProps: {},
+  ...defaultSettings
 };
 
 export function modalReducer(state = initialState, action = {}) {
@@ -31,18 +37,14 @@ export function hideModal() {
   };
 }
 
-export function showModal(modalType, dataProps = {}, settingsProps = {}) {
+export function showModal({modalType, modalProps = {}, ...other}) {
   return {
     type: SHOW_MODAL,
     payload: {
+      ...defaultSettings,
+      ...other,
       modalType,
-      dataProps,
-      settingsProps: {
-        shouldHideOnOverlayClick: true,
-        shouldHideOnEscapeKeyDown: true,
-        hasCloseButton: true,
-        ...settingsProps
-      }
+      modalProps
     }
   };
 }

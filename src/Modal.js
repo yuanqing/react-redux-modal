@@ -17,7 +17,8 @@ const style = {
 export default class Modal extends Component {
 
   static propTypes = {
-    // 1. Attribute props
+
+    // 1. ATTRIBUTE PROPS
     // An object that maps each `modalType` to the corresponding modal component.
     children: PropTypes.objectOf(PropTypes.func),
     // Classes for the subcomponents.
@@ -26,23 +27,25 @@ export default class Modal extends Component {
     // A function that returns the `Close` button component.
     renderCloseButton: PropTypes.func,
 
-    // 2. Injected props
+    // 2. INJECTED PROPS
     // Whether the modal is visible.
     isVisible: PropTypes.bool.isRequired,
     // The modal type. Will be `null` if no modal is being rendered.
     modalType: PropTypes.string,
     // Props spread over the current modal component (ie. one of the components
     // in `children`).
-    dataProps: PropTypes.object.isRequired,
-    // For customising the component behaviour.
-    settingsProps: PropTypes.shape({
-      hasCloseButton: PropTypes.bool,
-      shouldHideOnOverlayClick: PropTypes.bool,
-      shouldHideOnEscapeKeyDown: PropTypes.bool
-    }).isRequired,
-    // For dispatching actions to show and hide the modal.
+    modalProps: PropTypes.object.isRequired,
+    // Whether to render a close button (using `renderCloseButton`).
+    hasCloseButton: PropTypes.bool,
+    // Whether to hide the modal when the overlay is clicked.
+    shouldHideOnOverlayClick: PropTypes.bool,
+    // Whether to hide the modal when the `Esc` key is pressed.
+    shouldHideOnEscapeKeyDown: PropTypes.bool,
+    // Dispatch an action to hide the modal.
     hideModal: PropTypes.func.isRequired,
+    // Dispatch an action to show the modal.
     showModal: PropTypes.func.isRequired
+
   };
 
   static defaultProps = {
@@ -89,17 +92,14 @@ export default class Modal extends Component {
       renderCloseButton,
       isVisible,
       modalType,
-      dataProps,
-      settingsProps,
-      hideModal,
-      showModal
-    } = this.props;
-    const {
+      modalProps,
       hasCloseButton,
       shouldHideOnOverlayClick,
       shouldHideOnEscapeKeyDown,
-      ...otherSettingsProps
-    } = settingsProps;
+      hideModal,
+      showModal,
+      ...other
+    } = this.props;
 
     const cssTransitionGroup = {
       component: 'div',
@@ -111,7 +111,7 @@ export default class Modal extends Component {
         leave: 'leave',
         leaveActive: 'leaveActive'
       },
-      ...otherSettingsProps
+      ...other
     };
 
     const overlayProps = {
@@ -134,12 +134,6 @@ export default class Modal extends Component {
       className: contentClassName
     };
 
-    const modalProps = {
-      ...dataProps,
-      hideModal,
-      showModal
-    };
-
     const modal = children[modalType];
     return (
       <ReactCSSTransitionGroup {...cssTransitionGroup}>
@@ -148,7 +142,11 @@ export default class Modal extends Component {
             <div {...overlayProps} />
             <div {...contentWrapperProps}>
               <div {...contentProps}>
-                {createElement(modal, modalProps)}
+                {createElement(modal, {
+                  ...modalProps,
+                  hideModal,
+                  showModal
+                })}
                 {hasCloseButton && renderCloseButton(hideModal)}
               </div>
             </div>

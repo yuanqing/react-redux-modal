@@ -19,20 +19,19 @@ class Main extends Component {
 
   render() {
     const {showModal} = this.props;
-    const modalType = CONFIRMATION_MODAL;
-    const dataProps = {
-      title: 'foo',
-      description: 'bar'
-    };
-    const settingsProps = {
+    const options = {
+      modalType: CONFIRMATION_MODAL,
+      modalProps: {
+        title: 'foo',
+        description: 'bar'
+      },
       shouldHideOnOverlayClick: true,
-      shouldHideOnEscapeKeyDown: true,
-      hasCloseButton: true
+      shouldHideOnEscapeKeyDown: true
     };
     return (
       <div>
         <div className="main">
-          <button onClick={showModal.bind(null, modalType, dataProps, settingsProps)}>Show modal</button>
+          <button onClick={showModal.bind(null, options)}>Show modal</button>
         </div>
         <Modal>{modals}</Modal>
       </div>
