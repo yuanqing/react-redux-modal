@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({title, description}) => {
+export default ({title, description, ...other}) => {
   return (
     <div>
       <h1>{title}</h1>

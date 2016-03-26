@@ -2,7 +2,10 @@ export const HIDE_MODAL = 'modal/HIDE_MODAL';
 export const SHOW_MODAL = 'modal/SHOW_MODAL';
 
 export const initialState = {
-  isVisible: false
+  isVisible: false,
+  modalType: undefined,
+  modalProps: {},
+  settingsProps: {}
 };
 
 export function modal(state = initialState, action = {}) {
@@ -28,12 +31,13 @@ export function hideModal() {
   };
 }
 
-export function showModal(modalType, modalProps) {
+export function showModal(modalType, modalProps = {}, settingsProps = {}) {
   return {
     type: SHOW_MODAL,
     payload: {
       modalType,
-      modalProps
+      modalProps,
+      settingsProps
     }
   };
 }

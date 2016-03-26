@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {combineReducers, createStore} from 'redux';
 
-import {ModalPortal, modal, showModal} from '../src';
+import Modal, {modal, showModal} from '../src';
 import modals from './modals';
 import {CONFIRMATION_MODAL} from './modals/confirmationModal';
 
@@ -15,17 +15,17 @@ const store = createStore(reducer);
 class Main extends Component {
   render() {
     const {showModal} = this.props;
+    const modalType = CONFIRMATION_MODAL;
+    const modalProps = {
+      title: 'foo',
+      description: 'bar'
+    };
     return (
       <div>
         <div className="main">
-          <button onClick={() => {
-            showModal(CONFIRMATION_MODAL, {
-              title: 'foo',
-              description: 'bar'
-            })
-          }}>Show modal</button>
+          <button onClick={showModal.bind(null, modalType, modalProps)}>Show modal</button>
         </div>
-        <ModalPortal modals={modals} />
+        <Modal>{modals}</Modal>
       </div>
     );
   }

@@ -1,2 +1,4 @@
+import Modal from './Modal';
+
 export * from './redux';
-export * from './components';
+export default Modal;
