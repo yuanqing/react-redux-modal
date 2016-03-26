@@ -25,6 +25,7 @@ class Main extends Component {
         title: 'foo',
         description: 'bar'
       },
+      isMiddleAligned: true,
       shouldHideOnOverlayClick: true,
       shouldHideOnEscapeKeyDown: true
     };

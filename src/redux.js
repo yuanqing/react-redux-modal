@@ -4,7 +4,8 @@ export const SHOW_MODAL = 'modal/SHOW_MODAL';
 const defaultSettings = {
   shouldHideOnOverlayClick: false,
   shouldHideOnEscapeKeyDown: false,
-  hasCloseButton: false
+  hasCloseButton: false,
+  isMiddleAligned: false
 };
 
 export const initialState = {

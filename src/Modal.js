@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React, {Component, createElement, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -5,14 +6,17 @@ import {hideModal, showModal} from './redux';
 
 const ESCAPE_KEYCODE = 27;
 
-// Styles to make both `overlay` and `contentWrapper` fit the entire screen.
-const style = {
-  position: 'fixed',
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0
-};
+const cssTransitionGroupDefaultProps = {
+  component: 'div',
+  transitionEnterTimeout: 500,
+  transitionLeaveTimeout: 500,
+  transitionName: {
+    enter: 'enter',
+    enterActive: 'enterActive',
+    leave: 'leave',
+    leaveActive: 'leaveActive'
+  }
+}
 
 export default class Modal extends Component {
 
@@ -23,7 +27,9 @@ export default class Modal extends Component {
     children: PropTypes.objectOf(PropTypes.func),
     // Classes for the subcomponents.
     contentClassName: PropTypes.string,
+    contentWrapperClassName: PropTypes.string,
     overlayClassName: PropTypes.string,
+    middleAlignedClassName: PropTypes.string,
     // A function that returns the `Close` button component.
     renderCloseButton: PropTypes.func,
 
@@ -37,6 +43,8 @@ export default class Modal extends Component {
     modalProps: PropTypes.object.isRequired,
     // Whether to render a close button (using `renderCloseButton`).
     hasCloseButton: PropTypes.bool,
+    // Whether to middle-align the modal.
+    isMiddleAligned: PropTypes.bool,
     // Whether to hide the modal when the overlay is clicked.
     shouldHideOnOverlayClick: PropTypes.bool,
     // Whether to hide the modal when the `Esc` key is pressed.
@@ -51,7 +59,9 @@ export default class Modal extends Component {
   static defaultProps = {
     children: [],
     contentClassName: 'content',
+    contentWrapperClassName: 'contentWrapper',
     overlayClassName: 'overlay',
+    middleAlignedClassName: 'middleAligned',
     renderCloseButton: (hideModal) => {
       return <button className="closeButton" onClick={hideModal}>Close</button>;
     }
@@ -88,12 +98,15 @@ export default class Modal extends Component {
     const {
       children,
       contentClassName,
+      contentWrapperClassName,
       overlayClassName,
+      middleAlignedClassName,
       renderCloseButton,
       isVisible,
       modalType,
       modalProps,
       hasCloseButton,
+      isMiddleAligned,
       shouldHideOnOverlayClick,
       shouldHideOnEscapeKeyDown,
       hideModal,
@@ -101,52 +114,37 @@ export default class Modal extends Component {
       ...other
     } = this.props;
 
-    const cssTransitionGroup = {
-      component: 'div',
-      transitionEnterTimeout: 500,
-      transitionLeaveTimeout: 500,
-      transitionName: {
-        enter: 'enter',
-        enterActive: 'enterActive',
-        leave: 'leave',
-        leaveActive: 'leaveActive'
-      },
+    const cssTransitionGroupProps = {
+      ...cssTransitionGroupDefaultProps,
       ...other
     };
 
-    const overlayProps = {
-      className: overlayClassName,
-      style
-    };
-
     const contentWrapperProps = {
+      className: classnames(
+        contentWrapperClassName,
+        isMiddleAligned && middleAlignedClassName
+      ),
       onClick: shouldHideOnOverlayClick && this.hideOnOverlayClick,
       onKeyDown: shouldHideOnEscapeKeyDown && this.hideOnEscapeKeyDown,
       ref: 'contentWrapper',
-      style: {
-        ...style,
-        overflow: 'auto'
-      },
       tabIndex: 1
     };
 
-    const contentProps = {
-      className: contentClassName
+    const modal = children[modalType];
+    const props = {
+      ...modalProps,
+      hideModal,
+      showModal
     };
 
-    const modal = children[modalType];
     return (
-      <ReactCSSTransitionGroup {...cssTransitionGroup}>
+      <ReactCSSTransitionGroup {...cssTransitionGroupProps}>
         {isVisible && modal &&
           <div>
-            <div {...overlayProps} />
+            <div className={overlayClassName} />
             <div {...contentWrapperProps}>
-              <div {...contentProps}>
-                {createElement(modal, {
-                  ...modalProps,
-                  hideModal,
-                  showModal
-                })}
+              <div className={contentClassName}>
+                {createElement(modal, props)}
                 {hasCloseButton && renderCloseButton(hideModal)}
               </div>
             </div>

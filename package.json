@@ -10,6 +10,7 @@
     "url": "git://github.com/yuanqing/react-redux-modal.git"
   },
   "dependencies": {
+    "classnames": "2.2.3",
     "react-addons-css-transition-group": "^0.14.7"
   },
   "peerDependencies": {
