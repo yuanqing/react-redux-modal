@@ -5,6 +5,7 @@ import {Modal, hideModal, showModal} from '../';
 const ModalPortal = ({hideModal, showModal, isVisible, modals, modalProps, modalType}) => {
   const props = {
     hideModal,
+    showModal,
     isVisible
   };
   const SpecificModal = modals[modalType];
