@@ -4,14 +4,9 @@
     <title>react-redux-modal</title>
     <meta charset="utf-8">
     <style>
-      button {
-        font-size: 48px;
-      }
-
       .main {
         margin: 0 auto;
         padding: 500px 0;
-        background-color: cyan;
         text-align: center;
       }
 
@@ -31,6 +26,12 @@
       .enterActive .content {opacity: 1; top: 0; }
       .leave .content {opacity: 1; top: 0; }
       .leaveActive .content {opacity: 0; top: 10px; }
+
+      .closeButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
 
       .overlay {
         background-color: rgba(128,128,128,.9);

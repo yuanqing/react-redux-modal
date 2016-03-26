@@ -3,12 +3,12 @@ export const SHOW_MODAL = 'modal/SHOW_MODAL';
 
 export const initialState = {
   isVisible: false,
-  modalType: undefined,
-  modalProps: {},
+  modalType: null,
+  dataProps: {},
   settingsProps: {}
 };
 
-export function modal(state = initialState, action = {}) {
+export function modalReducer(state = initialState, action = {}) {
   switch (action.type) {
     case HIDE_MODAL:
       return {
@@ -31,13 +31,18 @@ export function hideModal() {
   };
 }
 
-export function showModal(modalType, modalProps = {}, settingsProps = {}) {
+export function showModal(modalType, dataProps = {}, settingsProps = {}) {
   return {
     type: SHOW_MODAL,
     payload: {
       modalType,
-      modalProps,
-      settingsProps
+      dataProps,
+      settingsProps: {
+        shouldHideOnOverlayClick: true,
+        shouldHideOnEscapeKeyDown: true,
+        hasCloseButton: true,
+        ...settingsProps
+      }
     }
   };
 }
