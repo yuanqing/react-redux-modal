@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Modal, hideModal, showModal} from '../';
 
-const ModalPortal = ({hideModal, showModal, isVisible, modals, modalProps, modalType}) => {
+export const ModalPortal = ({hideModal, showModal, isVisible, modals, modalProps, modalType}) => {
   const props = {
     hideModal,
     showModal,
@@ -11,9 +11,7 @@ const ModalPortal = ({hideModal, showModal, isVisible, modals, modalProps, modal
   const SpecificModal = modals[modalType];
   return (
     <Modal {...props}>
-      {SpecificModal
-        ? <SpecificModal {...modalProps} />
-        : <span />}
+      <SpecificModal {...props} {...modalProps} />
     </Modal>
   );
 };

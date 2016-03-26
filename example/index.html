@@ -4,32 +4,30 @@
     <title>react-redux-modal</title>
     <meta charset="utf-8">
     <style>
-      .root {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        overflow: auto;
-        padding: 50px 0;
+      button {
+        font-size: 48px;
       }
 
+      .main {
+        margin: 0 auto;
+        padding: 500px 0;
+        background-color: cyan;
+        text-align: center;
+      }
+
+      .contentWrapper,
       .overlay {
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgba(128,128,128,.9);
       }
-      .enterActive .overlay, .leaveActive .overlay {
-        transition: all .5s ease-in-out;
-        transition-property: opacity;
+
+      .contentWrapper {
+        overflow: auto;
+        padding: 50px 0;
       }
-      .enter .overlay {opacity: 0; }
-      .enterActive .overlay  {opacity: 1; }
-      .leave .overlay {opacity: 1; }
-      .leaveActive .overlay {opacity: 0; }
 
       .content {
         position: relative;
@@ -47,6 +45,18 @@
       .enterActive .content {opacity: 1; top: 0; }
       .leave .content {opacity: 1; top: 0; }
       .leaveActive .content {opacity: 0; top: 10px; }
+
+      .overlay {
+        background-color: rgba(128,128,128,.9);
+      }
+      .enterActive .overlay, .leaveActive .overlay {
+        transition: all .5s ease-in-out;
+        transition-property: opacity;
+      }
+      .enter .overlay {opacity: 0; }
+      .enterActive .overlay  {opacity: 1; }
+      .leave .overlay {opacity: 1; }
+      .leaveActive .overlay {opacity: 0; }
     </style>
   </head>
   <body>

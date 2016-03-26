@@ -16,7 +16,7 @@ const cssTransitionGroupOptions = {
 
 export default class Modal extends Component {
   static propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     isVisible: PropTypes.bool.isRequired,
     hideModal: PropTypes.func.isRequired,
     rootClassName: PropTypes.string,
@@ -25,13 +25,13 @@ export default class Modal extends Component {
   };
 
   static defaultProps = {
-    rootClassName: 'root',
     contentClassName: 'content',
+    contentWrapperClassName: 'contentWrapper',
     overlayClassName: 'overlay'
   };
 
   hideOnOverlayClick = (event) => {
-    if (event.target === this.refs.overlay) {
+    if (event.target === this.refs.contentWrapper) {
       this.props.hideModal();
     }
   };
@@ -50,7 +50,7 @@ export default class Modal extends Component {
   }
 
   componentDidUpdate() {
-    this.refs.root[this.props.isVisible ? 'focus' : 'blur']();
+    this.refs.contentWrapper[this.props.isVisible ? 'focus' : 'blur']();
   }
 
   render() {
@@ -59,8 +59,8 @@ export default class Modal extends Component {
       isVisible,
       hideModal,
       contentClassName,
+      contentWrapperClassName,
       overlayClassName,
-      rootClassName,
       ...rest
     } = this.props;
     return (
@@ -69,14 +69,16 @@ export default class Modal extends Component {
         {...cssTransitionGroupOptions}
         {...rest}>
         {isVisible &&
-          <div
-            className={rootClassName}
-            onClick={this.hideOnOverlayClick}
-            onKeyDown={this.hideOnEscapeKeyDown}
-            ref="root"
-            tabIndex={1}>
-            <div className={overlayClassName} ref="overlay" />
-            <div className={contentClassName}>{children}</div>
+          <div>
+            <div className={overlayClassName} />
+            <div
+              className={contentWrapperClassName}
+              onClick={this.hideOnOverlayClick}
+              onKeyDown={this.hideOnEscapeKeyDown}
+              ref="contentWrapper"
+              tabIndex={1}>
+              <div className={contentClassName}>{children}</div>
+            </div>
           </div>}
       </ReactCSSTransitionGroup>
     );

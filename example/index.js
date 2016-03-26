@@ -4,7 +4,8 @@ import {Provider, connect} from 'react-redux';
 import {combineReducers, createStore} from 'redux';
 
 import {ModalPortal, modal, showModal} from '../src';
-import modals, {CONFIRMATION_MODAL} from './modals';
+import modals from './modals';
+import {CONFIRMATION_MODAL} from './modals/confirmationModal';
 
 const reducer = combineReducers({
   modal
@@ -16,12 +17,14 @@ class Main extends Component {
     const {showModal} = this.props;
     return (
       <div>
-        <button onClick={() => {
-          showModal(CONFIRMATION_MODAL, {
-            title: 'foo',
-            description: 'bar'
-          })
-        }}>Show modal</button>
+        <div className="main">
+          <button onClick={() => {
+            showModal(CONFIRMATION_MODAL, {
+              title: 'foo',
+              description: 'bar'
+            })
+          }}>Show modal</button>
+        </div>
         <ModalPortal modals={modals} />
       </div>
     );
