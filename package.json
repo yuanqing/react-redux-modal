@@ -1,6 +1,6 @@
 {
   "name": "@yuanqing/react-redux-modal",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A React modal connected to the Redux store.",
   "author": "Lim Yuan Qing",
   "license": "MIT",
